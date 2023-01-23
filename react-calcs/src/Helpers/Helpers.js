@@ -14,9 +14,28 @@ function convertBinaryToText(inputStr) {
     }).join("")
 }
 
+function negateBits(bits){
+    return bits.replaceAll('1', '.').replaceAll('0','1').replaceAll('.','0');
+}
+
+
+function handleCalcSelection(type, str){
+    switch(type) {
+        case "Text to Binary":
+          return convertBinary(str);
+        case "Binary to Text":
+          return convertBinaryToText(str);
+        case "Invert Bits (Negate)":
+            return negateBits(str);
+        default:
+          break;
+      }
+}
+
 const CalcTypes = [
     "Text to Binary",
-    "Binary to Text"
+    "Binary to Text",
+    "Invert Bits (Negate)"
 ]
 
-export {convertBinary, copyText, convertBinaryToText, CalcTypes};
+export {handleCalcSelection, copyText, CalcTypes};

@@ -1,5 +1,5 @@
 import React from "react";
-import {convertBinary, copyText, convertBinaryToText, CalcTypes} from "../Helpers/Helpers";
+import {handleCalcSelection, copyText, CalcTypes} from "../Helpers/Helpers";
 
 class InputScreen extends React.Component {
 
@@ -14,11 +14,12 @@ class InputScreen extends React.Component {
     }
     
     handleInitClick(event) {
-        this.setState({value: event.target.value == 'input' ? '' : this.state.value, output: event.target.value == 'output' ? '' : this.state.output});
+        this.setState({value: event.target.value === 'input' ? '' : this.state.value, output: event.target.value === 'output' ? '' : this.state.output});
         event.preventDefault();
     }
 
     handleCalcChange(event, name) {
+        this.handleClear(event);
         this.setState({calcType: name});
         console.log(name)
         event.preventDefault();
@@ -34,7 +35,7 @@ class InputScreen extends React.Component {
     }
   
     handleSubmit(event) {
-        var binConvert = this.state.calcType === 'Text to Binary'? convertBinary(this.state.value) : convertBinaryToText(this.state.value);
+        var binConvert = handleCalcSelection(this.state.calcType, this.state.value);
         copyText(binConvert);
         this.setState({output: binConvert});
         event.preventDefault();
@@ -42,19 +43,19 @@ class InputScreen extends React.Component {
   
     render() {
       return (
-        <form class="App-header">
-
-         <div>{CalcTypes.map((c) =>(
+        <form class="binaryCalcHeader">
+         <div>
+            {CalcTypes.map((c) =>(
               <button onClick={e => this.handleCalcChange(e, c)} class="calc-buttons">{c}</button>
-          ))}</div>
-
+            ))}
+          </div>
           <h1 class="calc-header">{this.state.calcType}</h1>
           <textarea class="inputField" value={this.state.value} onClick={this.handleInitClick} onChange={this.handleChange} cols="40" rows="5"></textarea>
           <textarea class="inputField" value={this.state.output} onClick={this.handleInitClick} onChange={this.handleChange} cols="40" rows="5"></textarea>
           <button onClick={this.handleSubmit} class="submitButton">Submit</button>
           <button onClick={this.handleClear} class="submitButton">Clear</button>
 
-          <a class="infoSection">{this.state.output !== '--' ? "Copied to clipboard!": "Please make an entry above."}</a>
+          <a class="infoSection">{this.state.output !== 'output' ? "Copied to clipboard!": "Please make an entry above."}</a>
         </form>
       );
     }
