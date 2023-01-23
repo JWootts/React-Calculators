@@ -5,12 +5,12 @@ class InputScreen extends React.Component {
 
     constructor(props) {
       super(props);
-      this.state = {value: 'input', output: 'output', calcType: CalcTypes[0]};
+      this.state = {value: 'input', output: 'output', calcType: CalcTypes[0], copyClip: true};
       this.handleChange = this.handleChange.bind(this);
-      this.handleSubmit = this.handleSubmit.bind(this);
       this.handleClear = this.handleClear.bind(this);
       this.handleCalcChange = this.handleCalcChange.bind(this);
       this.handleInitClick = this.handleInitClick.bind(this);
+      this.handleClipChange = this.handleClipChange.bind(this);
     }
     
     handleInitClick(event) {
@@ -21,24 +21,24 @@ class InputScreen extends React.Component {
     handleCalcChange(event, name) {
         this.handleClear(event);
         this.setState({calcType: name});
-        console.log(name)
         event.preventDefault();
     }
 
     handleChange(event) {
-      this.setState({value: event.target.value});
+      var binConvert = handleCalcSelection(this.state.calcType, event.target.value);
+      this.setState({value: event.target.value, output: binConvert});
+      if(this.state.copyClip)
+        copyText(binConvert);
+      event.preventDefault();
     }
 
     handleClear(event) {
         this.setState({value: 'input', output: 'output', calcType: this.state.calcType});
         event.preventDefault();
     }
-  
-    handleSubmit(event) {
-        var binConvert = handleCalcSelection(this.state.calcType, this.state.value);
-        copyText(binConvert);
-        this.setState({output: binConvert});
-        event.preventDefault();
+
+    handleClipChange() {
+      this.setState({copyClip: !this.state.copyClip});
     }
   
     render() {
@@ -52,9 +52,8 @@ class InputScreen extends React.Component {
           <h1 class="calc-header">{this.state.calcType}</h1>
           <textarea class="inputField" value={this.state.value} onClick={this.handleInitClick} onChange={this.handleChange} cols="40" rows="5"></textarea>
           <textarea class="inputField" value={this.state.output} onClick={this.handleInitClick} onChange={this.handleChange} cols="40" rows="5"></textarea>
-          <button onClick={this.handleSubmit} class="submitButton">Submit</button>
           <button onClick={this.handleClear} class="submitButton">Clear</button>
-
+          <label class="checkboxClipboard"><input type="checkbox" checked={this.state.copyClip} onChange={this.handleClipChange}/> Copy to Clipboard</label>
           <a class="infoSection">{this.state.output !== 'output' ? "Copied to clipboard!": "Please make an entry above."}</a>
         </form>
       );

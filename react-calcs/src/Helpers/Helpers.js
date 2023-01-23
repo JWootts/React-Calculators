@@ -4,10 +4,6 @@ function convertBinary(inputStr) {
     return Array.from(inputStr).map((each)=>each.charCodeAt(0).toString(2)).join(' ');
 }
 
-function copyText(outputStr) {
-    navigator.clipboard.writeText(outputStr);
-}
-
 function convertBinaryToText(inputStr) {
     return inputStr.split(" ").map(function(elem) {
         return String.fromCharCode(parseInt(elem, 2));
@@ -18,6 +14,9 @@ function negateBits(bits){
     return bits.replaceAll('1', '.').replaceAll('0','1').replaceAll('.','0');
 }
 
+function copyText(outputStr) {
+    navigator.clipboard.writeText(outputStr);
+}
 
 function handleCalcSelection(type, str){
     switch(type) {
