@@ -7,10 +7,15 @@ class InputScreen extends React.Component {
       this.state = {value: '', output: '--'};
       this.handleChange = this.handleChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
+      this.handleClear = this.handleClear.bind(this);
     }
   
     handleChange(event) {
       this.setState({value: event.target.value});
+    }
+
+    handleClear(event) {
+        this.setState({value: ""});
     }
   
     handleSubmit(event) {
@@ -23,10 +28,11 @@ class InputScreen extends React.Component {
   
     render() {
       return (
-        <form class="App-header" onSubmit={this.handleSubmit}>
+        <form class="App-header">
           <h1 class="calc-header">Convert to Binary:</h1>
           <textarea class="inputField" value={this.state.value} onChange={this.handleChange} cols="40" rows="5"></textarea>
-          <button type="submit" class="submitButton">Submit</button>
+          <button onClick={this.handleSubmit} class="submitButton">Submit</button>
+          <button onClick={this.handleClear} class="submitButton">Clear</button>
           <h3 class="outputField">{this.state.output}</h3>
           <a class="infoSection">{this.state.output !== '--' ? "Copied to clipboard!": "Please make an entry above."}</a>
         </form>
