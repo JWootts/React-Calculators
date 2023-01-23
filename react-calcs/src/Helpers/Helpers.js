@@ -8,4 +8,15 @@ function copyText(outputStr) {
     navigator.clipboard.writeText(outputStr);
 }
 
-export {convertBinary, copyText};
+function convertBinaryToText(inputStr) {
+    return inputStr.split(" ").map(function(elem) {
+        return String.fromCharCode(parseInt(elem, 2));
+    }).join("")
+}
+
+const CalcTypes = [
+    "Text to Binary",
+    "Binary to Text"
+]
+
+export {convertBinary, copyText, convertBinaryToText, CalcTypes};
