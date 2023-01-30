@@ -43,6 +43,9 @@
 .calc-buttons{
   justify-content: left;
   align-items: left;
+  background-color: #1b3e5e;
+  color:black;
+  margin-left: 0.5%;
 }
 
 .calc-buttons:hover{

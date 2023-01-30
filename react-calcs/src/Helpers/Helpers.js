@@ -24,7 +24,7 @@ function handleCalcSelection(type, str){
           return convertBinary(str);
         case "Binary to Text":
           return convertBinaryToText(str);
-        case "Invert Bits (Negate)":
+        case "Negate Bits":
             return negateBits(str);
         default:
           break;
@@ -34,7 +34,7 @@ function handleCalcSelection(type, str){
 const CalcTypes = [
     "Text to Binary",
     "Binary to Text",
-    "Invert Bits (Negate)"
+    "Negate Bits",
 ]
 
 export {handleCalcSelection, copyText, CalcTypes};
